@@ -1,5 +1,7 @@
 package tpGestionAcademica;
-
+										      /*git add .
+												git commit -m "Explicá acá brevemente qué agregaste"
+												git push origin main*/
 public class TPGestionAcademica {
 
 	public static void main(String[] args) {
