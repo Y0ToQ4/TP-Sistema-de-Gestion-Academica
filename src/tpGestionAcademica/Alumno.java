@@ -13,12 +13,12 @@ public class Alumno {
 		this.promedio = promedio;
 	}
 
-	// Método auxiliar privado para normalizar "juan perez" -> "Juan Perez"
+	// Método auxiliar privado para normalizar " juan  perez" -> "Juan Perez"
 	private String normalizarNombre(String nombreOriginal) {
 		if (nombreOriginal == null || nombreOriginal.isEmpty()) {
 			return nombreOriginal;
 		}
-		String[] palabras = nombreOriginal.trim().split("\\s+");
+		String[] palabras = nombreOriginal.trim().split("\\s+");  // trim Borra todos los espacios libres que estén al principio y al final del texto. split Corta el texto y lo convierte en un arreglo de palabras (String[])
 		StringBuilder nombreNormalizado = new StringBuilder();
 		for (String palabra : palabras) {
 			if (!palabra.isEmpty()) {
