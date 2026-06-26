@@ -7,7 +7,7 @@ public class Alumno {
 	
 	// Constructor
 	public Alumno(String nombre, int legajo, double promedio) {
-		this.nombre = normalizarNombre(nombre); // Normaliza aquí
+		this.nombre = normalizarNombre(nombre);
 		this.legajo = legajo;
 		this.promedio = promedio;
 	}
