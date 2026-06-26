@@ -1,7 +1,6 @@
 package tpGestionAcademica;
 
 public class Alumno {
-	// Atributos privados (Viven en el Heap cuando se instancia el objeto)
 	private String nombre;
 	private int legajo;
 	private double promedio; //float
