@@ -52,4 +52,9 @@ public class Alumno {
 	public void setPromedio(double promedio) {
 		this.promedio = promedio;
 	}
+
+	@Override
+	public String toString() {
+		return "Alumno " + nombre + "| Legajo " + legajo + "| Promedio: " + promedio;
+	}
 }

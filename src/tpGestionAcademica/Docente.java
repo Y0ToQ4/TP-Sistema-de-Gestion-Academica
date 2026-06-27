@@ -11,7 +11,7 @@ public class Docente {
 		this.catedra = catedra;
 		this.antiguedad = antiguedad;
 	}
-
+	
 	// Getters y Setters
 	public String getNombre() {
 		return nombre;
