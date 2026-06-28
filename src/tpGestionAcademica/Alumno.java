@@ -11,7 +11,7 @@ public class Alumno {
 		this.legajo = legajo;
 		this.promedio = promedio;
 	}
-
+	
 	private String normalizarNombre(String nombreOriginal) {
 		if (nombreOriginal == null || nombreOriginal.isEmpty()) {
 			return nombreOriginal;

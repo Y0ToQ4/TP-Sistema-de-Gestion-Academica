@@ -10,50 +10,45 @@ public class TPGestionAcademica {
 
 		Alumno a1 = new Alumno("Pérez Juan", 101, 6.5);
 		Alumno a2 = new Alumno("Gómez Ana", 102, 9.5);
-		Alumno a3 = new Alumno("Díaz Bruno", 103, 8.0);
+		Alumno a3 = new Alumno("Díaz Bruno", 101, 8.0);
 		Alumno a4 = new Alumno("López Clara", 104, 7.2);
 		Alumno[] listaAlumnos = { a1, a2, a3, a4 };
 		
 		Docente d1 = new Docente("Gomez", "UTN",5);
         Docente d2 = new Docente("Soria", "UNTREF",67); 
         Docente[] listaDocentes = { d1, d2 };
-
-		System.out.println(" LISTA ORIGINAL (DESORDENADA):");
-		for (Alumno a : listaAlumnos) {
-			System.out.println(a);
-		}
-		System.out.println("------------------------------------------------");
 		
 		Comision comisionA = new Comision(listaDocentes.length, listaAlumnos.length);
 		
         comisionA.registrarDocente(d1);
         comisionA.registrarDocente(d2);
         
-        comisionA.asignarDiaDocente("Gomez", "Lunes");
-        comisionA.asignarDiaDocente("Gomez", "Miércoles");
-        comisionA.asignarDiaDocente("Soria", "Lunes");
-        comisionA.asignarDiaDocente("Soria", "Viernes");
-		
 		comisionA.registrarAlumno(a1);
 	    comisionA.registrarAlumno(a2);
 	    comisionA.registrarAlumno(a3);
 	    comisionA.registrarAlumno(a4);
 	    System.out.println("------------------------------------------------");
+	    
+	    System.out.println(" LISTA ORIGINAL (DESORDENADA):");
+		for (Alumno a : listaAlumnos) {
+			System.out.println(a);
+		}
+		System.out.println("------------------------------------------------");
+	    
+		comisionA.asignarDiaDocente("Gomez", "Lunes");
+        comisionA.asignarDiaDocente("Gomez", "Miércoles");
+        comisionA.asignarDiaDocente("Soria", "Lunes");
+        comisionA.asignarDiaDocente("Soria", "Viernes");
+		System.out.println("------------------------------------------------");
         comisionA.mostrarCronograma();
 		System.out.println("------------------------------------------------");
 		
 		comisionA.mostrarCuadroDeMerito();
 		
         System.out.println(" PROBANDO BÚSQUEDA DE ALUMNOS");
-        Alumno resultado1 = comisionA.buscarAlumnoPorNombre("gomez ana");
-        if (resultado1 != null) {
-            System.out.println("Se encontró con exito a: " + resultado1.getNombre()); 
-        }
-
-        Alumno resultado2 = comisionA.buscarAlumnoPorNombre("Jacob Sasha");
-        if (resultado2 != null) {
-            System.out.println("Se encontró con exito a: " + resultado2.getNombre()); 
-        }
+        comisionA.buscarAlumnoPorLegajo(101);
+        comisionA.buscarAlumnoPorLegajo(167);
+        
 		System.out.println("------------------------------------------------");
         
         System.out.println("--- EJECUTANDO BAJA DEL LEGAJO 102 ---");
