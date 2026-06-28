@@ -210,20 +210,25 @@ public class Comision {
 	}
 	
 	public void ordenarAlumnosPorPromedio() {
-		if (cantidadInscritos < 2) {
-			return;
-		}
-		for (int i = 0; i < cantidadInscritos - 1; i++) {
-			for (int j = 0; j < cantidadInscritos - i - 1; j++) {
-				if (listaAlumnos[j] != null && listaAlumnos[j + 1] != null) {
-					if (listaAlumnos[j].getPromedio() < listaAlumnos[j + 1].getPromedio()) {
-						Alumno temp = listaAlumnos[j];
-						listaAlumnos[j] = listaAlumnos[j + 1];
-						listaAlumnos[j + 1] = temp;
-					}
-				}
-			}
-		}
+	    if (cantidadInscritos < 2) {
+	        return;
+	    }
+	    boolean huboCambio;
+	    int pasadas = 0; 
+	    do {
+	        huboCambio = false;
+	        for (int j = 0; j < cantidadInscritos - 1 - pasadas; j++) {
+	            if (listaAlumnos[j] != null && listaAlumnos[j + 1] != null) {
+	                if (listaAlumnos[j].getPromedio() < listaAlumnos[j + 1].getPromedio()) {
+	                    Alumno temp = listaAlumnos[j];
+	                    listaAlumnos[j] = listaAlumnos[j + 1];
+	                    listaAlumnos[j + 1] = temp;
+	                    huboCambio = true;
+	                }
+	            }
+	        }
+	        pasadas++;
+	    } while (huboCambio);
 	}
 	
 	public void mostrarCuadroDeMerito() {

@@ -14,8 +14,8 @@ public class TPGestionAcademica {
 		Alumno a4 = new Alumno("López Clara", 104, 7.2);
 		Alumno[] listaAlumnos = { a1, a2, a3, a4 };
 		
-		Docente d1 = new Docente("Gomez", "UTN",5);
-        Docente d2 = new Docente("Soria", "UNTREF",67); 
+		Docente d1 = new Docente("Gomez", "abc",5);
+        Docente d2 = new Docente("Soria", "def",67); 
         Docente[] listaDocentes = { d1, d2 };
 		
 		Comision comisionA = new Comision(listaDocentes.length, listaAlumnos.length);
