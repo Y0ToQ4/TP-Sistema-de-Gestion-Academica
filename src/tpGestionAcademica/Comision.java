@@ -4,8 +4,10 @@ public class Comision {
 	private boolean[][] cronogramaAsignacion;
 	private Docente[] listaDocentes;
 	private int cantidadDocentes;
+	
 	private Alumno[] listaAlumnos;
 	private int cantidadInscritos;
+	
 	private boolean abierta;
 	
 	public Comision(int cupoMaxDocentes, int cupoMaxAlumnos) {
@@ -39,8 +41,11 @@ public class Comision {
 		}
 		return false;
 	}
-
+	
 	public boolean registrarDocente(Docente nuevoDocente) {
+		if (nuevoDocente == null) {
+			return false;
+		}
 		if (cantidadDocentes >= listaDocentes.length) {
 			System.out.println("Error: No hay más cupo para docentes en esta comisión.");
 			return false;
