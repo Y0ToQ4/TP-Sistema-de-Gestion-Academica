@@ -18,7 +18,7 @@ public class TPGestionAcademica {
         Docente d2 = new Docente("Soria", "UNTREF",67); 
         Docente[] listaDocentes = { d1, d2 };
 
-		System.out.println("LISTA ORIGINAL (DESORDENADA):");
+		System.out.println(" LISTA ORIGINAL (DESORDENADA):");
 		for (Alumno a : listaAlumnos) {
 			System.out.println(a);
 		}
@@ -38,20 +38,40 @@ public class TPGestionAcademica {
 	    comisionA.registrarAlumno(a2);
 	    comisionA.registrarAlumno(a3);
 	    comisionA.registrarAlumno(a4);
-
-        comisionA.mostrarCuadroDeMerito();
+	    System.out.println("------------------------------------------------");
         comisionA.mostrarCronograma();
 		System.out.println("------------------------------------------------");
 		
-        System.out.println("PROBANDO BÚSQUEDA DE ALUMNOS");
+		comisionA.mostrarCuadroDeMerito();
+		
+        System.out.println(" PROBANDO BÚSQUEDA DE ALUMNOS");
         Alumno resultado1 = comisionA.buscarAlumnoPorNombre("gomez ana");
         if (resultado1 != null) {
             System.out.println("Se encontró con exito a: " + resultado1.getNombre()); 
         }
 
-        Alumno resultado2 = comisionA.buscarAlumnoPorNombre("jacob sasha");
+        Alumno resultado2 = comisionA.buscarAlumnoPorNombre("Jacob Sasha");
         if (resultado2 != null) {
             System.out.println("Se encontró con exito a: " + resultado2.getNombre()); 
         }
+		System.out.println("------------------------------------------------");
+        
+        System.out.println("--- EJECUTANDO BAJA DEL LEGAJO 102 ---");
+        comisionA.bajaAlumno(102); 
+        System.out.println("--- PROBANDO BORRAR UN LEGAJO INEXISTENTE (999) ---");
+        comisionA.bajaAlumno(999);
+        
+        System.out.println("--- LISTA DESPUÉS DE LA BAJA (Debería haber 3 alumnos y estar acomodados) ---");
+        comisionA.mostrarCuadroDeMerito();
+        
+        System.out.println("--- EDITANDO LEGAJO 101 ---");
+        comisionA.modificarAlumno(101, "Pérez Juan Carlos", 9.0);
+        System.out.println("--- PROBANDO EDITAR UN LEGAJO INEXISTENTE (888) ---");
+        comisionA.modificarAlumno(888, "Nadie", 10.0);
+
+        System.out.println("--- LISTA DESPUÉS DE LA MODIFICACIÓN ---");
+        comisionA.mostrarCuadroDeMerito();
+        
+        
     }
 }

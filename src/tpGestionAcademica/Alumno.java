@@ -12,7 +12,6 @@ public class Alumno {
 		this.promedio = promedio;
 	}
 
-	// Método auxiliar privado para normalizar " juan  perez" -> "Juan Perez"
 	private String normalizarNombre(String nombreOriginal) {
 		if (nombreOriginal == null || nombreOriginal.isEmpty()) {
 			return nombreOriginal;
