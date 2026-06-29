@@ -1,11 +1,10 @@
-package tpGestionAcademica;
+package main;
 
 public class Alumno {
 	private String nombre;
 	private int legajo;
-	private double promedio; //float
+	private double promedio;
 	
-	// Constructor
 	public Alumno(String nombre, int legajo, double promedio) {
 		this.nombre = normalizarNombre(nombre);
 		this.legajo = legajo;
@@ -16,7 +15,7 @@ public class Alumno {
 		if (nombreOriginal == null || nombreOriginal.isEmpty()) {
 			return nombreOriginal;
 		}
-		String[] palabras = nombreOriginal.trim().split("\\s+");  // trim Borra todos los espacios libres que estén al principio y al final del texto. split Corta el texto y lo convierte en un arreglo de palabras (String[])
+		String[] palabras = nombreOriginal.trim().split("\\s+");
 		StringBuilder nombreNormalizado = new StringBuilder();
 		for (String p : palabras) {
 			if (!p.isEmpty()) {
@@ -27,7 +26,6 @@ public class Alumno {
 		return nombreNormalizado.toString().trim();
 	}
 	
-	// Getters y Setters
 	public String getNombre() {
 		return nombre;
 	}

@@ -1,18 +1,16 @@
-package tpGestionAcademica;
+package main;
 
 public class Docente {
 	private String nombre;
 	private String catedra;
 	private int antiguedad;
 
-	// Constructor
 	public Docente(String nombre, String catedra, int antiguedad) {
 		this.nombre = nombre;
 		this.catedra = catedra;
 		this.antiguedad = antiguedad;
 	}
 	
-	// Getters y Setters
 	public String getNombre() {
 		return nombre;
 	}
