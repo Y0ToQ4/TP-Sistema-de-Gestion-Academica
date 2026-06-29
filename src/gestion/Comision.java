@@ -1,4 +1,4 @@
-package main;
+package gestion;
 
 public class Comision {
 	private String[][] cronogramaAsignacion;
@@ -63,7 +63,7 @@ public class Comision {
 			return;
 		}
 
-		int indiceEncontrado = -1;
+		int indiceEncontrado = -1; 
 		boolean encontrado = false;
 
 		for (int i = 0; i < cantidadInscritos && !encontrado; i++) {
@@ -90,6 +90,14 @@ public class Comision {
 		if (legajoAModificar <= 0) {
 			System.out.println("Error: El legajo a editar no es válido.");
 			return;
+		}
+		if (nombreAModificar == null || nombreAModificar.trim().isEmpty()) {
+		    System.out.println("Error: El nombre modificado no puede estar vacío.");
+		    return;
+		}
+		if (promedioAModificar < 0 || promedioAModificar > 10) {
+		    System.out.println("Error: El promedio debe estar entre 0 y 10.");
+		    return;
 		}
 		boolean encontrado = false;
 
@@ -154,26 +162,24 @@ public class Comision {
 	}
 
 	public Alumno[] obtenerAlumnosOrdenados() {
-		this.ordenarAlumnosPorPromedio();
+	    this.ordenarAlumnosPorPromedio();
 
-		System.out.println(" CUADRO DE MÉRITO (ORDENADO)");
-
-		if (cantidadInscritos == 0) {
-			System.out.println("No hay alumnos inscritos en esta comisión.");
-			return this.listaAlumnos;
-		}
-		for (int i = 0; i < cantidadInscritos; i++) {
-			Alumno temp = listaAlumnos[i];
-
-			if (temp != null) {
-				System.out.println((i + 1) + "° - " + temp.getNombre() + " | Promedio: " + temp.getPromedio());
-			}
-		}
-		System.out.println("------------------------------------------------");
-
-		return this.listaAlumnos;
+	    System.out.println(" CUADRO DE MÉRITO (ORDENADO)");
+	    if (cantidadInscritos == 0) {
+	        System.out.println("No hay alumnos inscritos en esta comisión.");
+	        return new Alumno[0];
+	    }
+	    Alumno[] copiaOrdenada = new Alumno[this.cantidadInscritos];
+	    for (int i = 0; i < this.cantidadInscritos; i++) {
+	        copiaOrdenada[i] = this.listaAlumnos[i];
+	        if (copiaOrdenada[i] != null) {
+	            System.out.println((i + 1) + "° - " + copiaOrdenada[i].getNombre() + " | Promedio: " + copiaOrdenada[i].getPromedio());
+	        }
+	    }
+	    System.out.println("------------------------------------------------");
+	    return copiaOrdenada;
 	}
-
+	
 	public String[][] obtenerCronograma() {
 		System.out.println(" CRONOGRAMA DE ASIGNACIÓN ");
 		System.out.println("Docente |  Lun  |  Mar  |  Mié  |  Jue  |  Vie  |");

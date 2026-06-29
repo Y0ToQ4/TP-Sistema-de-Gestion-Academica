@@ -1,4 +1,4 @@
-package main;
+package gestion;
 
 public class Alumno {
 	private String nombre;
