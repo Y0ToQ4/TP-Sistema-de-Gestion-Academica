@@ -45,7 +45,7 @@ public class Comision {
 				encontrado = true;
 			}
 		}
-		return encontrado;
+		return encontrado; 
 	}
 
 	/**
@@ -54,11 +54,24 @@ public class Comision {
 	 * la cantidad de inscritos y devuelve true. Caso contrario, muestra un error y
 	 * devuelve false.
 	 */
+	
 	public boolean darAlumnoDeAlta(Alumno nuevoAlumno) {
-		if (nuevoAlumno == null) {
-			System.out.println("Error: El alumno debe tener un nombre válido.");
-			return false;
-		}
+        if (nuevoAlumno == null) {
+            System.out.println("Error: El alumno debe tener un nombre válido.");
+            return false;
+        }
+        if (nuevoAlumno.getNombre() == null || nuevoAlumno.getNombre().trim().equals("")) {
+            System.out.println("Error: El nombre del alumno no puede estar vacío.");
+            return false;
+        }
+        if (nuevoAlumno.getLegajo() <= 0) {
+            System.out.println("Error: El legajo ingresado debe ser un número válido.");
+            return false;
+        }
+        if (nuevoAlumno.getPromedio() < 0 || nuevoAlumno.getPromedio() > 10) {
+            System.out.println("Error: El promedio académico debe estar entre 0 y 10.");
+            return false;
+        }
 		if (this.cantidadInscritos >= this.listaAlumnos.length) {
 			System.out.println("Error: No hay cupo disponible en esta comisión.");
 			return false;
