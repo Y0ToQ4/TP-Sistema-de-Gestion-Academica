@@ -1,5 +1,9 @@
 package gestion;
 
+/**
+ * Clase que representa una Comisión Académica. Administra los arreglos de
+ * alumnos, docentes y la matriz del cronograma de asignación.
+ */
 public class Comision {
 	private String[][] cronogramaAsignacion;
 	private Docente[] listaDocentes;
@@ -10,7 +14,11 @@ public class Comision {
 
 	private boolean abierta;
 
-	public Comision(int cupoMaxDocentes, int cupoMaxAlumnos) {
+	/**
+	 * Clase que representa una Comisión Académica. Administra los arreglos de
+	 * alumnos, docentes y la matriz del cronograma de asignación.
+	 */
+	public Comision(int cupoMaxAlumnos, int cupoMaxDocentes) {
 		this.listaDocentes = new Docente[cupoMaxDocentes];
 		this.cantidadDocentes = 0;
 		this.cronogramaAsignacion = new String[3][5];
@@ -20,6 +28,12 @@ public class Comision {
 		this.abierta = true;
 	}
 
+	/**
+	 * Pre: Recibe un número de legajo entero. Post: Realiza una búsqueda lineal
+	 * dentro de las posiciones ocupadas del arreglo de alumnos. Devuelve true si
+	 * encuentra un alumno con ese mismo legajo; si no lo encuentra o el número es
+	 * menor o igual a cero, emite un aviso por consola y devuelve false.
+	 */
 	public boolean existeLegajo(int legajo) {
 		if (legajo <= 0) {
 			System.out.println("Error: El legajo ingresado debe ser válido.");
@@ -34,17 +48,25 @@ public class Comision {
 		return encontrado;
 	}
 
+	/**
+	 * Pre: Recibe una instancia de Alumno no nula (null). Post: Si el legajo no
+	 * existe y hay cupo disponible, registra al alumno en la comisión, incrementa
+	 * la cantidad de inscritos y devuelve true. Caso contrario, muestra un error y
+	 * devuelve false.
+	 */
 	public boolean darAlumnoDeAlta(Alumno nuevoAlumno) {
 		if (nuevoAlumno == null) {
 			System.out.println("Error: El alumno debe tener un nombre válido.");
 			return false;
 		}
-
+		if (this.cantidadInscritos >= this.listaAlumnos.length) {
+			System.out.println("Error: No hay cupo disponible en esta comisión.");
+			return false;
+		}
 		if (existeLegajo(nuevoAlumno.getLegajo())) {
 			System.out.println("Error: Ya existe un alumno inscrito con el legajo " + nuevoAlumno.getLegajo());
 			return false;
 		}
-
 		for (int i = 0; i < listaAlumnos.length; i++) {
 			if (listaAlumnos[i] == null) {
 				listaAlumnos[i] = nuevoAlumno;
@@ -53,17 +75,22 @@ public class Comision {
 				return true;
 			}
 		}
-		System.out.println("Error: No hay cupo disponible en esta comisión.");
 		return false;
 	}
 
+	/**
+	 * Pre: Recibe un número de legajo entero mayor a cero. Post: Si encuentra al
+	 * alumno con ese legajo, lo elimina del arreglo, reordena las posiciones
+	 * restantes hacia adelante para no dejar huecos vacíos (null) en el medio,
+	 * decrementa los inscritos y limpia la última posición del arreglo.
+	 */
 	public void darAlumnoDeBaja(int legajoBaja) {
 		if (legajoBaja <= 0) {
 			System.out.println("Error: El legajo para dar de baja debe ser válido.");
 			return;
 		}
 
-		int indiceEncontrado = -1; 
+		int indiceEncontrado = -1;
 		boolean encontrado = false;
 
 		for (int i = 0; i < cantidadInscritos && !encontrado; i++) {
@@ -86,18 +113,24 @@ public class Comision {
 		System.out.println("Alumno con legajo " + legajoBaja + " dado de baja correctamente.");
 	}
 
+	/**
+	 * Pre: Recibe un legajo mayor a cero, una cadena de texto para el nombre (no
+	 * nula ni vacía) y un número para el promedio entre 0 y 10. Post: Si el legajo
+	 * existe en la comisión, actualiza sus atributos de nombre y promedio con los
+	 * nuevos valores ingresados.
+	 */
 	public void cambiarAlumnoPorLegajo(int legajoAModificar, String nombreAModificar, double promedioAModificar) {
 		if (legajoAModificar <= 0) {
 			System.out.println("Error: El legajo a editar no es válido.");
 			return;
 		}
 		if (nombreAModificar == null || nombreAModificar.trim().isEmpty()) {
-		    System.out.println("Error: El nombre modificado no puede estar vacío.");
-		    return;
+			System.out.println("Error: El nombre modificado no puede estar vacío.");
+			return;
 		}
 		if (promedioAModificar < 0 || promedioAModificar > 10) {
-		    System.out.println("Error: El promedio debe estar entre 0 y 10.");
-		    return;
+			System.out.println("Error: El promedio debe estar entre 0 y 10.");
+			return;
 		}
 		boolean encontrado = false;
 
@@ -131,7 +164,7 @@ public class Comision {
 				System.out.println("------------------------");
 				alumnoEncontrado = actual;
 				encontrado = true;
-			}
+			} 
 		}
 		if (!encontrado) {
 			System.out.println("El legajo " + legajoABuscar + " no corresponde a ningún alumno registrado.");
@@ -139,6 +172,11 @@ public class Comision {
 		return alumnoEncontrado;
 	}
 
+	/**
+	 * Pre: Nada (el método evalúa internamente si hay alumnos suficientes). Post:
+	 * Ordena los objetos Alumno del arreglo de mayor a menor según su promedio
+	 * utilizando el algoritmo de Bubble Sort.
+	 */
 	public void ordenarAlumnosPorPromedio() {
 		if (cantidadInscritos < 2) {
 			return;
@@ -161,25 +199,37 @@ public class Comision {
 		} while (huboCambio);
 	}
 
+	/**
+	 * Pre: Nada. El método valida internamente si existen alumnos en la comisión.
+	 * Post: Invoca al ordenamiento interno de los alumnos por promedio, genera y
+	 * devuelve una copia (un nuevo arreglo en el Heap) con las referencias
+	 * ordenadas de forma descendente y muestra el cuadro de mérito en consola.
+	 */
 	public Alumno[] obtenerAlumnosOrdenados() {
-	    this.ordenarAlumnosPorPromedio();
+		this.ordenarAlumnosPorPromedio();
 
-	    System.out.println(" CUADRO DE MÉRITO (ORDENADO)");
-	    if (cantidadInscritos == 0) {
-	        System.out.println("No hay alumnos inscritos en esta comisión.");
-	        return new Alumno[0];
-	    }
-	    Alumno[] copiaOrdenada = new Alumno[this.cantidadInscritos];
-	    for (int i = 0; i < this.cantidadInscritos; i++) {
-	        copiaOrdenada[i] = this.listaAlumnos[i];
-	        if (copiaOrdenada[i] != null) {
-	            System.out.println((i + 1) + "° - " + copiaOrdenada[i].getNombre() + " | Promedio: " + copiaOrdenada[i].getPromedio());
-	        }
-	    }
-	    System.out.println("------------------------------------------------");
-	    return copiaOrdenada;
+		System.out.println(" CUADRO DE MÉRITO (ORDENADO)");
+		if (cantidadInscritos == 0) {
+			System.out.println("No hay alumnos inscritos en esta comisión.");
+			return new Alumno[0];
+		}
+		Alumno[] copiaOrdenada = new Alumno[this.cantidadInscritos];
+		for (int i = 0; i < this.cantidadInscritos; i++) {
+			copiaOrdenada[i] = this.listaAlumnos[i];
+			if (copiaOrdenada[i] != null) {
+				System.out.println((i + 1) + "° - " + copiaOrdenada[i].getNombre() + " | Promedio: "
+						+ copiaOrdenada[i].getPromedio());
+			}
+		}
+		System.out.println("------------------------------------------------");
+		return copiaOrdenada;
 	}
-	
+
+	/**
+	 * Pre: Nada. Post: Imprime en consola de forma estructurada y tabular la
+	 * matriz del cronograma (turnos y días de la semana) y devuelve la referencia
+	 * original de la matriz bidimensional de asignaciones.
+	 */
 	public String[][] obtenerCronograma() {
 		System.out.println(" CRONOGRAMA DE ASIGNACIÓN ");
 		System.out.println("Docente |  Lun  |  Mar  |  Mié  |  Jue  |  Vie  |");
@@ -209,6 +259,12 @@ public class Comision {
 		return this.cronogramaAsignacion;
 	}
 
+	/**
+	 * Pre: Recibe una instancia de Docente que no sea nula (null). Post: Si hay
+	 * espacio disponible en el arreglo de docentes, almacena al nuevo docente en la
+	 * primera posición libre, incrementa el contador de docentes, muestra un
+	 * mensaje de éxito y devuelve true. Si no hay cupo, devuelve false.
+	 */
 	public boolean darDocenteDeAlta(Docente nuevoD) {
 		if (nuevoD == null) {
 			return false;
@@ -224,6 +280,13 @@ public class Comision {
 		return true;
 	}
 
+	/**
+	 * Pre: Recibe índices enteros válidos para las dimensiones de la matriz (turno
+	 * entre 0 y 2, día entre 0 y 4) y una cadena de texto para la materia no vacía.
+	 * Post: Si el casillero de la matriz está vacío (null), guarda el nombre de la
+	 * materia normalizado. Si ya estaba ocupado o los rangos son inválidos, muestra
+	 * un mensaje de error o aviso en consola sin modificar el estado previo.
+	 */
 	public void asignarTurno(int turnoAAsignar, int diaAAsignar, String materia) {
 		if (turnoAAsignar < 0 || turnoAAsignar > 2 || diaAAsignar < 0 || diaAAsignar > 4) {
 			System.out.println("Error: Turno o día fuera de rango válido.");
@@ -242,18 +305,34 @@ public class Comision {
 		}
 	}
 
+	/**
+	 * Pre: Ninguna. Post: Devuelve el estado de apertura de la comisión (true si
+	 * está abierta, false si está cerrada).
+	 */
 	public boolean isAbierta() {
 		return abierta;
 	}
 
+	/**
+	 * Pre: Recibe un valor booleano (true o false). Post: Modifica el estado de la
+	 * variable de apertura de la comisión con el valor recibido.
+	 */
 	public void setAbierta(boolean abierta) {
 		this.abierta = abierta;
 	}
 
+	/**
+	 * Pre: Nada. Post: Devuelve la referencia de memoria del arreglo que contiene a
+	 * los docentes de la comisión.
+	 */
 	public Docente[] getListaDocentes() {
 		return listaDocentes;
 	}
 
+	/**
+	 * Pre: Nada. Post: Devuelve la referencia de memoria del arreglo que contiene a
+	 * los alumnos de la comisión.
+	 */
 	public Alumno[] getListaAlumnos() {
 		return listaAlumnos;
 	}

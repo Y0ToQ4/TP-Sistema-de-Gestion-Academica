@@ -1,0 +1,36 @@
+{
+  "alumnos": [
+    {
+      "nombre": "Alan Slatcha",
+      "legajo": 10,
+      "promedio": 8.5
+    },
+    {
+      "nombre": "Santiago Fernández",
+      "legajo": 11,
+      "promedio": 9.0
+    },
+    {
+      "nombre": "Milton Tobías Lucero",
+      "legajo": 12,
+      "promedio": 4.5
+    }
+  ],
+  "docentes": [
+    {
+      "nombre": "Lucas Videla",
+      "catedra": "Algoritmos y Programacion I",
+      "antiguedad": 20
+    },
+    {
+      "nombre": "Leonardo Blautzik",
+      "catedra": "Algoritmos y Programacion I",
+      "antiguedad": 30
+    },
+    {
+      "nombre": "Fabián Lagorio",
+      "catedra": "Algoritmos y Programacion I",
+      "antiguedad": 10
+    }
+  ]
+}
