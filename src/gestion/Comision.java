@@ -45,33 +45,33 @@ public class Comision {
 				encontrado = true;
 			}
 		}
-		return encontrado; 
+		return encontrado;
 	}
 
 	/**
-	 * Pre: Recibe una instancia de Alumno no nula (null). Post: Si el legajo no
-	 * existe y hay cupo disponible, registra al alumno en la comisión, incrementa
-	 * la cantidad de inscritos y devuelve true. Caso contrario, muestra un error y
+	 * Pre: Recibe una instancia de Alumno con atributos válidos (nombre no vacío,
+	 * legajo mayor a cero y promedio entre 0 y 10). Post: Si el legajo no existe y
+	 * hay cupo disponible, registra al alumno en la comisión, incrementa la
+	 * cantidad de inscritos y devuelve true. Caso contrario, muestra un error y
 	 * devuelve false.
 	 */
-	
 	public boolean darAlumnoDeAlta(Alumno nuevoAlumno) {
-        if (nuevoAlumno == null) {
-            System.out.println("Error: El alumno debe tener un nombre válido.");
-            return false;
-        }
-        if (nuevoAlumno.getNombre() == null || nuevoAlumno.getNombre().trim().equals("")) {
-            System.out.println("Error: El nombre del alumno no puede estar vacío.");
-            return false;
-        }
-        if (nuevoAlumno.getLegajo() <= 0) {
-            System.out.println("Error: El legajo ingresado debe ser un número válido.");
-            return false;
-        }
-        if (nuevoAlumno.getPromedio() < 0 || nuevoAlumno.getPromedio() > 10) {
-            System.out.println("Error: El promedio académico debe estar entre 0 y 10.");
-            return false;
-        }
+		if (nuevoAlumno == null) {
+			System.out.println("Error: El alumno debe tener un nombre válido.");
+			return false;
+		}
+		if (nuevoAlumno.getNombre() == null || nuevoAlumno.getNombre().trim().equals("")) {
+			System.out.println("Error: El nombre del alumno no puede estar vacío.");
+			return false;
+		}
+		if (nuevoAlumno.getLegajo() <= 0) {
+			System.out.println("Error: El legajo ingresado debe ser un número válido.");
+			return false;
+		}
+		if (nuevoAlumno.getPromedio() < 0 || nuevoAlumno.getPromedio() > 10) {
+			System.out.println("Error: El promedio académico debe estar entre 0 y 10.");
+			return false;
+		}
 		if (this.cantidadInscritos >= this.listaAlumnos.length) {
 			System.out.println("Error: No hay cupo disponible en esta comisión.");
 			return false;
@@ -84,7 +84,6 @@ public class Comision {
 			if (listaAlumnos[i] == null) {
 				listaAlumnos[i] = nuevoAlumno;
 				cantidadInscritos++;
-				System.out.println("Alumno " + nuevoAlumno.getNombre() + " inscrito exitosamente.");
 				return true;
 			}
 		}
@@ -155,7 +154,6 @@ public class Comision {
 			}
 		}
 		if (encontrado) {
-			System.out.println("Datos del alumno legajo " + legajoAModificar + " modificados con éxito.");
 		} else {
 			System.out.println("Error: No se encontró al alumno con legajo " + legajoAModificar);
 		}
@@ -164,7 +162,6 @@ public class Comision {
 	public Alumno obtenerAlumnoPorLegajo(int legajoABuscar) {
 		Alumno alumnoEncontrado = null;
 		if (legajoABuscar <= 0) {
-			System.out.println("Error: El legajo ingresado no es válido.");
 			return null;
 		}
 		boolean encontrado = false;
@@ -172,12 +169,9 @@ public class Comision {
 		for (int i = 0; i < cantidadInscritos && !encontrado; i++) {
 			Alumno actual = listaAlumnos[i];
 			if (actual != null && actual.getLegajo() == legajoABuscar) {
-				System.out.println("--- FICHA DE ALUMNO ---");
-				System.out.println(actual.toString());
-				System.out.println("------------------------");
 				alumnoEncontrado = actual;
 				encontrado = true;
-			} 
+			}
 		}
 		if (!encontrado) {
 			System.out.println("El legajo " + legajoABuscar + " no corresponde a ningún alumno registrado.");
@@ -216,12 +210,11 @@ public class Comision {
 	 * Pre: Nada. El método valida internamente si existen alumnos en la comisión.
 	 * Post: Invoca al ordenamiento interno de los alumnos por promedio, genera y
 	 * devuelve una copia (un nuevo arreglo en el Heap) con las referencias
-	 * ordenadas de forma descendente y muestra el cuadro de mérito en consola.
+	 * ordenadas de forma descendente.
 	 */
 	public Alumno[] obtenerAlumnosOrdenados() {
 		this.ordenarAlumnosPorPromedio();
 
-		System.out.println(" CUADRO DE MÉRITO (ORDENADO)");
 		if (cantidadInscritos == 0) {
 			System.out.println("No hay alumnos inscritos en esta comisión.");
 			return new Alumno[0];
@@ -229,46 +222,15 @@ public class Comision {
 		Alumno[] copiaOrdenada = new Alumno[this.cantidadInscritos];
 		for (int i = 0; i < this.cantidadInscritos; i++) {
 			copiaOrdenada[i] = this.listaAlumnos[i];
-			if (copiaOrdenada[i] != null) {
-				System.out.println((i + 1) + "° - " + copiaOrdenada[i].getNombre() + " | Promedio: "
-						+ copiaOrdenada[i].getPromedio());
-			}
 		}
-		System.out.println("------------------------------------------------");
 		return copiaOrdenada;
 	}
 
 	/**
-	 * Pre: Nada. Post: Imprime en consola de forma estructurada y tabular la
-	 * matriz del cronograma (turnos y días de la semana) y devuelve la referencia
-	 * original de la matriz bidimensional de asignaciones.
+	 * Pre: Nada. Post: Devuelve la referencia original de la matriz bidimensional
+	 * de asignaciones.
 	 */
 	public String[][] obtenerCronograma() {
-		System.out.println(" CRONOGRAMA DE ASIGNACIÓN ");
-		System.out.println("Docente |  Lun  |  Mar  |  Mié  |  Jue  |  Vie  |");
-		for (int i = 0; i < 3; i++) {
-			if (i == 0) {
-				System.out.print("Mañana  |");
-			} else if (i == 1) {
-				System.out.print("Tarde   |");
-			} else {
-				System.out.print("Noche   |");
-			}
-			for (int j = 0; j < 5; j++) {
-				String materiaAsignada = cronogramaAsignacion[i][j];
-
-				if (materiaAsignada != null) {
-					if (materiaAsignada.length() > 5) {
-						System.out.print(" " + materiaAsignada.substring(0, 5) + " |");
-					} else {
-						System.out.printf(" %-5s |", materiaAsignada);
-					}
-				} else {
-					System.out.print(" ----- |");
-				}
-			}
-			System.out.println();
-		}
 		return this.cronogramaAsignacion;
 	}
 
@@ -288,8 +250,6 @@ public class Comision {
 		}
 		listaDocentes[cantidadDocentes] = nuevoD;
 		cantidadDocentes++;
-
-		System.out.println("Docente registrado con éxito.");
 		return true;
 	}
 
