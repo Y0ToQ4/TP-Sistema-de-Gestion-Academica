@@ -8,7 +8,6 @@ public class Docente {
 	private String nombre;
 	private String catedra;
 	private int antiguedad;
-
 	/**
 	 * Pre: Recibe cadenas de caracteres válidas para el nombre y la cátedra, y un
 	 * entero mayor o igual a cero para la antigüedad. Post: Inicializa las
@@ -57,7 +56,7 @@ public class Docente {
 	public int getAntiguedad() {
 		return antiguedad;
 	}
-
+	
 	/**
 	 * Pre: Recibe un entero mayor o igual a cero con los años de antigüedad. Post:
 	 * Modifica la antigüedad del docente con el valor recibido.

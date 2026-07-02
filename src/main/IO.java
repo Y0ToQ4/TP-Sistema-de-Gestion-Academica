@@ -23,12 +23,11 @@ public class IO {
 	public static void println(String mensaje) {
 		System.out.println(mensaje);
 	}
-
+	
 	/**
 	 * Pre: Ninguna. Post: Genera un salto de línea vacío.
 	 */
 	public static void println() {
 		System.out.println();
 	}
-
 }

@@ -21,7 +21,7 @@ public class Comision {
 	public Comision(int cupoMaxAlumnos, int cupoMaxDocentes) {
 		this.listaDocentes = new Docente[cupoMaxDocentes];
 		this.cantidadDocentes = 0;
-		this.cronogramaAsignacion = new String[3][5];
+		this.cronogramaAsignacion = new String[3][6];
 
 		this.listaAlumnos = new Alumno[cupoMaxAlumnos];
 		this.cantidadInscritos = 0;
@@ -31,21 +31,20 @@ public class Comision {
 	/**
 	 * Pre: Recibe un número de legajo entero. Post: Realiza una búsqueda lineal
 	 * dentro de las posiciones ocupadas del arreglo de alumnos. Devuelve true si
-	 * encuentra un alumno con ese mismo legajo; si no lo encuentra o el número es
-	 * menor o igual a cero, emite un aviso por consola y devuelve false.
+	 * encuentra un alumno con ese mismo legajo; si no lo encuentra, devuelve false.
 	 */
-	public boolean existeLegajo(int legajo) {
+	public boolean legajoRepetido(int legajo) {
 		if (legajo <= 0) {
 			System.out.println("Error: El legajo ingresado debe ser válido.");
 			return false;
 		}
-		boolean encontrado = false;
-		for (int i = 0; i < this.cantidadInscritos && !encontrado; i++) {
+		boolean repetido = false;
+		for (int i = 0; i < this.cantidadInscritos && !repetido; i++) {
 			if (this.listaAlumnos[i] != null && this.listaAlumnos[i].getLegajo() == legajo) {
-				encontrado = true;
+				repetido = true;
 			}
 		}
-		return encontrado;
+		return repetido;
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class Comision {
 			System.out.println("Error: No hay cupo disponible en esta comisión.");
 			return false;
 		}
-		if (existeLegajo(nuevoAlumno.getLegajo())) {
+		if (legajoRepetido(nuevoAlumno.getLegajo())) {
 			System.out.println("Error: Ya existe un alumno inscrito con el legajo " + nuevoAlumno.getLegajo());
 			return false;
 		}
@@ -91,29 +90,30 @@ public class Comision {
 	}
 
 	/**
-	 * Pre: Recibe un número de legajo entero mayor a cero. Post: Si encuentra al
-	 * alumno con ese legajo, lo elimina del arreglo, reordena las posiciones
-	 * restantes hacia adelante para no dejar huecos vacíos (null) en el medio,
-	 * decrementa los inscritos y limpia la última posición del arreglo.
+	 * Pre: Recibe un número de legajo entero (legajoBaja). Post: Si el legajo es
+	 * menor o igual a cero o no pertenece a ningún alumno registrado, muestra un
+	 * mensaje de error por consola y finaliza la ejecución. Si el alumno existe, lo
+	 * elimina del arreglo desplazando los elementos posteriores para mantener el
+	 * orden, asigna null al último casillero ocupado, decrementa la cantidad de
+	 * inscritos e informa el éxito de la operación.
 	 */
-	public void darAlumnoDeBaja(int legajoBaja) {
-		if (legajoBaja <= 0) {
-			System.out.println("Error: El legajo para dar de baja debe ser válido.");
+	public void darAlumnoDeBaja(int legajoDeBaja) {
+		if (legajoDeBaja <= 0) {
+			System.out.println("Error: El legajo para dar de baja debe ser válido(positivo).");
 			return;
 		}
-
-		int indiceEncontrado = -1;
 		boolean encontrado = false;
+		int indiceEncontrado = 0;
 
 		for (int i = 0; i < cantidadInscritos && !encontrado; i++) {
-			if (listaAlumnos[i] != null && listaAlumnos[i].getLegajo() == legajoBaja) {
+			if (listaAlumnos[i] != null && listaAlumnos[i].getLegajo() == legajoDeBaja) {
 				indiceEncontrado = i;
 				encontrado = true;
 			}
 		}
 
 		if (!encontrado) {
-			System.out.println("Error: No se encontró ningún alumno con el legajo " + legajoBaja);
+			System.out.println("Error: No se encontró ningún alumno con el legajo " + legajoDeBaja);
 			return;
 		}
 
@@ -122,14 +122,18 @@ public class Comision {
 		}
 		listaAlumnos[cantidadInscritos - 1] = null;
 		cantidadInscritos--;
-		System.out.println("Alumno con legajo " + legajoBaja + " dado de baja correctamente.");
+		System.out.println("Alumno con legajo " + legajoDeBaja + " dado de baja correctamente.");
 	}
 
 	/**
-	 * Pre: Recibe un legajo mayor a cero, una cadena de texto para el nombre (no
-	 * nula ni vacía) y un número para el promedio entre 0 y 10. Post: Si el legajo
-	 * existe en la comisión, actualiza sus atributos de nombre y promedio con los
-	 * nuevos valores ingresados.
+	 * Pre: Recibe un entero para el legajo (legajoAModificar), un String para el
+	 * nombre (nombreAModificar) y un valor real para el promedio
+	 * (promedioAModificar). Post: Si los parámetros de entrada no cumplen con las
+	 * restricciones de validación (legajo positivo, nombre no vacío y promedio
+	 * entre 0 y 10) o si el legajo no corresponde a ningún alumno inscrito, emite
+	 * un mensaje de error por consola y finaliza la ejecución sin alterar el estado
+	 * del sistema. Si el alumno existe y los datos son válidos, actualiza su nombre
+	 * y promedio.
 	 */
 	public void cambiarAlumnoPorLegajo(int legajoAModificar, String nombreAModificar, double promedioAModificar) {
 		if (legajoAModificar <= 0) {
@@ -159,6 +163,13 @@ public class Comision {
 		}
 	}
 
+	/**
+	 * Pre: Recibe un número de legajo entero (legajoABuscar). Post: Si el legajo es
+	 * menor o igual a cero, finaliza la ejecución devolviendo null. Si el legajo es
+	 * positivo pero no se encuentra registrado en la comisión, emite un mensaje de
+	 * aviso por consola y devuelve null. Si el alumno existe, devuelve la
+	 * referencia original de su objeto de tipo Alumno.
+	 */
 	public Alumno obtenerAlumnoPorLegajo(int legajoABuscar) {
 		Alumno alumnoEncontrado = null;
 		if (legajoABuscar <= 0) {
@@ -180,9 +191,11 @@ public class Comision {
 	}
 
 	/**
-	 * Pre: Nada (el método evalúa internamente si hay alumnos suficientes). Post:
-	 * Ordena los objetos Alumno del arreglo de mayor a menor según su promedio
-	 * utilizando el algoritmo de Bubble Sort.
+	 * Pre: Ninguna. Post: Si la cantidad de alumnos inscritos es menor a dos,
+	 * finaliza la ejecución sin realizar modificaciones. Caso contrario, reorganiza
+	 * los elementos dentro del arreglo interno de alumnos de forma descendente (de
+	 * mayor a menor) según su promedio, preservando los mismos objetos e integridad
+	 * de los datos mediante el algoritmo Bubble Sort.
 	 */
 	public void ordenarAlumnosPorPromedio() {
 		if (cantidadInscritos < 2) {
@@ -207,10 +220,12 @@ public class Comision {
 	}
 
 	/**
-	 * Pre: Nada. El método valida internamente si existen alumnos en la comisión.
-	 * Post: Invoca al ordenamiento interno de los alumnos por promedio, genera y
-	 * devuelve una copia (un nuevo arreglo en el Heap) con las referencias
-	 * ordenadas de forma descendente.
+	 * Pre: Ninguna. Post: Llama al método de ordenamiento descendente del arreglo
+	 * interno. Si no hay alumnos inscritos en la comisión, muestra un mensaje de
+	 * aviso por consola y devuelve un arreglo vacío de tipo Alumno (tamaño cero).
+	 * Si existen alumnos inscritos, genera, estructura y devuelve un nuevo arreglo
+	 * en el Heap que contiene las referencias de los alumnos ordenadas de mayor a
+	 * menor según su promedio académico.
 	 */
 	public Alumno[] obtenerAlumnosOrdenados() {
 		this.ordenarAlumnosPorPromedio();
@@ -227,18 +242,22 @@ public class Comision {
 	}
 
 	/**
-	 * Pre: Nada. Post: Devuelve la referencia original de la matriz bidimensional
-	 * de asignaciones.
+	 * Pre: Ninguna. Post: Provee acceso externo a la estructura del cronograma,
+	 * devolviendo la referencia original de la matriz bidimensional de asignaciones
+	 * para que pueda ser leída o procesada por componentes de la interfaz de
+	 * usuario.
 	 */
 	public String[][] obtenerCronograma() {
-		return this.cronogramaAsignacion;
+		return this.cronogramaAsignacion; // da una referencia de la matriz cronogramaAsignacion
 	}
 
 	/**
-	 * Pre: Recibe una instancia de Docente que no sea nula (null). Post: Si hay
-	 * espacio disponible en el arreglo de docentes, almacena al nuevo docente en la
-	 * primera posición libre, incrementa el contador de docentes, muestra un
-	 * mensaje de éxito y devuelve true. Si no hay cupo, devuelve false.
+	 * Pre: Recibe una referencia de tipo Docente (nuevoD). Post: Si el docente
+	 * recibido es nulo o si se ha alcanzado el límite máximo de cupo en el arreglo
+	 * de docentes (mostrando en este último caso un mensaje de error por consola),
+	 * finaliza la ejecución devolviendo false sin alterar el sistema. Caso
+	 * contrario, almacena al docente en la posición indexada por el contador
+	 * actual, incrementa la cantidad de docentes inscritos y devuelve true.
 	 */
 	public boolean darDocenteDeAlta(Docente nuevoD) {
 		if (nuevoD == null) {
@@ -254,14 +273,17 @@ public class Comision {
 	}
 
 	/**
-	 * Pre: Recibe índices enteros válidos para las dimensiones de la matriz (turno
-	 * entre 0 y 2, día entre 0 y 4) y una cadena de texto para la materia no vacía.
-	 * Post: Si el casillero de la matriz está vacío (null), guarda el nombre de la
-	 * materia normalizado. Si ya estaba ocupado o los rangos son inválidos, muestra
-	 * un mensaje de error o aviso en consola sin modificar el estado previo.
+	 * Pre: Recibe dos números enteros para las coordenadas (turnoAAsignar y
+	 * diaAAsignar) y una referencia de tipo String para la asignatura (materia).
+	 * Post: Si los índices están fuera de los rangos válidos (turno entre 0 y 2,
+	 * día entre 0 y 5), si la materia es nula o vacía, o si el casillero
+	 * seleccionado de la matriz ya se encuentra ocupado, muestra el correspondiente
+	 * mensaje de error o aviso por consola y finaliza la ejecución sin alterar el
+	 * cronograma. Si todas las validaciones son exitosas, almacena el nombre de la
+	 * materia sin espacios en blanco redundantes.
 	 */
 	public void asignarTurno(int turnoAAsignar, int diaAAsignar, String materia) {
-		if (turnoAAsignar < 0 || turnoAAsignar > 2 || diaAAsignar < 0 || diaAAsignar > 4) {
+		if (turnoAAsignar < 0 || turnoAAsignar > 2 || diaAAsignar < 0 || diaAAsignar > 5) {
 			System.out.println("Error: Turno o día fuera de rango válido.");
 			return;
 		}
@@ -274,7 +296,6 @@ public class Comision {
 					+ this.cronogramaAsignacion[turnoAAsignar][diaAAsignar]);
 		} else {
 			this.cronogramaAsignacion[turnoAAsignar][diaAAsignar] = materia.trim();
-			System.out.println("Materia " + materia + " asignada con éxito.");
 		}
 	}
 
