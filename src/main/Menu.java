@@ -40,7 +40,7 @@ public class Menu {
 		}
 		IO.println("\n> Saliendo del sistema...");
 	}
-
+	
 	private void mostrarMenu() {
 		IO.println("\n╔═══════════════════════════════════════╗");
 		IO.println("║    SGA - Sistema Gestión Académica    ║");

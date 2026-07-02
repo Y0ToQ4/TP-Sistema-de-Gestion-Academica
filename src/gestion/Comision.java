@@ -46,7 +46,7 @@ public class Comision {
 		}
 		return repetido;
 	}
-
+	
 	/**
 	 * Pre: Recibe una instancia de Alumno con atributos válidos (nombre no vacío,
 	 * legajo mayor a cero y promedio entre 0 y 10). Post: Si el legajo no existe y
@@ -88,7 +88,7 @@ public class Comision {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Pre: Recibe un número de legajo entero (legajoDeBaja). Post: Si el legajo es
 	 * menor o igual a cero o no pertenece a ningún alumno registrado, muestra un
@@ -121,7 +121,7 @@ public class Comision {
 		cantidadInscritos--;
 		return true;
 	}
-
+	
 	/**
 	 * Pre: Recibe un entero para el legajo (legajoAModificar), un String para el
 	 * nombre (nombreAModificar) y un valor real para el promedio
