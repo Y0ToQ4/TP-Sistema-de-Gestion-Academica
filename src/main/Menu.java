@@ -54,7 +54,7 @@ public class Menu {
 		IO.println("║ 0. Salir                              ║");
 		IO.println("╚═══════════════════════════════════════╝");
 	}
-
+	
 	private void procesarOpcion(int opcion) {
 		switch (opcion) {
 		case 1:
@@ -66,15 +66,17 @@ public class Menu {
 			IO.print("> Promedio académico inicial: ");
 			double promedioDeAlta = Double.parseDouble(entrada.nextLine());
 			Alumno nuevoAlumno = new Alumno(nombreDeAlta, legajoDeAlta, promedioDeAlta);
-			comision.darAlumnoDeAlta(nuevoAlumno);
-			IO.println("\n[ÉXITO] Alumno dado de alta correctamente en la comisión.");
+			if (comision.darAlumnoDeAlta(nuevoAlumno)) {
+		        IO.println("\n[ÉXITO] Alumno dado de alta correctamente en la comisión.");
+		    }
 			break;
 		case 2:
 			IO.println("\n[SISTEMA] BAJA DE ALUMNO");
-			IO.print("> Ingresá el legajo del alumno a dar de baja");
+			IO.print("> Ingresá el legajo del alumno a dar de baja: ");
 			int legajoDeBaja = Integer.parseInt(entrada.nextLine());
-			comision.darAlumnoDeBaja(legajoDeBaja);
-			IO.println("\n[ÉXITO] Alumn dado de baja correctamente.");
+			if (comision.darAlumnoDeBaja(legajoDeBaja)) {
+				IO.println("\n[ÉXITO] Alumno dado de baja correctamente.");
+			}
 			break;
 		case 3:
 			IO.println("\n[SISTEMA] MODIFICACIÓN DE ALUMNO");
@@ -116,7 +118,7 @@ public class Menu {
 			IO.println(
 					"> Seleccioná el día: 0 = Lunes | 1 = Martes | 2 = Miércoles | 3 = Jueves | 4 = Viernes | 5 = Sábado");
 			int diaAAsignar = Integer.parseInt(entrada.nextLine());
-			IO.print("> Nombre de la Cátedra: ");
+			IO.print("> Nombre de la Clase (Cátedra): ");
 			String materia = entrada.nextLine();
 			comision.asignarTurno(turnoAAsignar, diaAAsignar, materia);
 			IO.println("\n[ÉXITO] Cronograma actualizado correctamente.");
@@ -128,7 +130,7 @@ public class Menu {
 			IO.println("\n[ALERTA] Opción incorrecta, intentá de nuevo.");
 		}
 	}
-
+	
 	private void imprimirCronograma() {
 		String[][] cronograma = comision.obtenerCronograma();
 		String[] turnos = { "Mañana", "Tarde", "Noche" };

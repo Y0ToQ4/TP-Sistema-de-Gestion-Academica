@@ -10,7 +10,7 @@ public class IO {
 	 */
 	public static void print(String mensaje) {
 		if (mensaje.equals("[null]\t")) {
-			System.out.print("[ ----- ]\t");
+			System.out.print("[ ----- ] \t");
 		} else {
 			System.out.print(mensaje);
 		}

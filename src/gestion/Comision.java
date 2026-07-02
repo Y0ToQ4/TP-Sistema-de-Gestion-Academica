@@ -90,39 +90,36 @@ public class Comision {
 	}
 
 	/**
-	 * Pre: Recibe un número de legajo entero (legajoBaja). Post: Si el legajo es
+	 * Pre: Recibe un número de legajo entero (legajoDeBaja). Post: Si el legajo es
 	 * menor o igual a cero o no pertenece a ningún alumno registrado, muestra un
-	 * mensaje de error por consola y finaliza la ejecución. Si el alumno existe, lo
+	 * mensaje de error por consola y devuelve false. Si el alumno existe, lo
 	 * elimina del arreglo desplazando los elementos posteriores para mantener el
-	 * orden, asigna null al último casillero ocupado, decrementa la cantidad de
-	 * inscritos e informa el éxito de la operación.
+	 * orden, asigna null al último casillero que estaba ocupado, decrementa la
+	 * cantidad de inscritos y devuelve true.
 	 */
-	public void darAlumnoDeBaja(int legajoDeBaja) {
+	public boolean darAlumnoDeBaja(int legajoDeBaja) {
 		if (legajoDeBaja <= 0) {
 			System.out.println("Error: El legajo para dar de baja debe ser válido(positivo).");
-			return;
+			return false;
 		}
 		boolean encontrado = false;
 		int indiceEncontrado = 0;
-
 		for (int i = 0; i < cantidadInscritos && !encontrado; i++) {
 			if (listaAlumnos[i] != null && listaAlumnos[i].getLegajo() == legajoDeBaja) {
 				indiceEncontrado = i;
 				encontrado = true;
 			}
 		}
-
 		if (!encontrado) {
 			System.out.println("Error: No se encontró ningún alumno con el legajo " + legajoDeBaja);
-			return;
+			return false;
 		}
-
 		for (int j = indiceEncontrado; j < cantidadInscritos - 1; j++) {
 			listaAlumnos[j] = listaAlumnos[j + 1];
 		}
 		listaAlumnos[cantidadInscritos - 1] = null;
 		cantidadInscritos--;
-		System.out.println("Alumno con legajo " + legajoDeBaja + " dado de baja correctamente.");
+		return true;
 	}
 
 	/**
