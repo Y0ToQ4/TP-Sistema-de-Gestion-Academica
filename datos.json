@@ -19,17 +19,17 @@
   "docentes": [
     {
       "nombre": "Toshinori",
-      "clase": "Combate",
+      "catedra": "Combate",
       "antiguedad": 20
     },
     {
       "nombre": "Aizawa",
-      "clase": "Logistica",
+      "catedra": "Logistica",
       "antiguedad": 15
     },
     {
       "nombre": "Kurose",
-      "clase": "Rescate",
+      "catedra": "Rescate",
       "antiguedad": 10
     }
   ]

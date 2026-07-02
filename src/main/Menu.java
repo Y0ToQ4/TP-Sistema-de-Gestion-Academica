@@ -43,7 +43,7 @@ public class Menu {
 
 	private void mostrarMenu() {
 		IO.println("\n╔═══════════════════════════════════════╗");
-		IO.println("║      SGA - Sistema Gestión Académica  ║");
+		IO.println("║  SGA - Sistema Gestión Académica - UA ║");
 		IO.println("╠═══════════════════════════════════════╣");
 		IO.println("║ 1. Dar alumno de alta                 ║");
 		IO.println("║ 2. Dar alumno de baja                 ║");
@@ -118,7 +118,7 @@ public class Menu {
 			IO.println(
 					"> Seleccioná el día: 0 = Lunes | 1 = Martes | 2 = Miércoles | 3 = Jueves | 4 = Viernes | 5 = Sábado");
 			int diaAAsignar = Integer.parseInt(entrada.nextLine());
-			IO.print("> Nombre de la Clase (Cátedra): ");
+			IO.print("> Nombre del Entrenamiento (Cátedra): ");
 			String materia = entrada.nextLine();
 			comision.asignarTurno(turnoAAsignar, diaAAsignar, materia);
 			IO.println("\n[ÉXITO] Cronograma actualizado correctamente.");
