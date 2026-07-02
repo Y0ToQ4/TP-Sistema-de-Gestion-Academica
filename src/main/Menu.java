@@ -43,7 +43,7 @@ public class Menu {
 
 	private void mostrarMenu() {
 		IO.println("\n╔═══════════════════════════════════════╗");
-		IO.println("║  SGA - Sistema Gestión Académica - UA ║");
+		IO.println("║    SGA - Sistema Gestión Académica    ║");
 		IO.println("╠═══════════════════════════════════════╣");
 		IO.println("║ 1. Dar alumno de alta                 ║");
 		IO.println("║ 2. Dar alumno de baja                 ║");
